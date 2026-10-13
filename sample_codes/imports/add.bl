@@ -1,0 +1,18 @@
+// vim: ft=c
+namespace name {
+    // templates would create static function to the importer
+    T add(T a, T b)<T>{return a + b;}
+    // pass the error to the function call on the caller's scope
+    [[caller_fault]]
+    float sum(T va_args)<T>{ // expects struct
+        float total = 0;
+        for (int i = 0; i < MEMBER_COUNT(va_args); i++) {
+            typeof(va_args[i]) val = va_args[i];
+            total += val; // might give error if val is not compatible with float
+        }
+    }
+    int func();
+}
+int add::func() {
+    return 1;
+}

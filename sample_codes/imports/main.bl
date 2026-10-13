@@ -1,0 +1,28 @@
+// vim: ft=c
+
+import "add.mylang"   as add;
+import <stdio.mylang>;
+
+typedef struct T_impl {
+    int c;
+    float d;
+    char a[10]; // actually a struct with 10 member
+} T; // assessing elements could be a.member or a[N]
+// where N would be the member and N >= MEMBER_COUNT(a) would return void
+
+// templated struct
+struct templated_struct<T> { // type shadowing is allowed but would give warning
+    T a;
+}; // templated struct isn't allowed on typedef unless you define the type
+
+typedef struct templated_struct<int> templated_struct_int;
+
+// main is declared somewhere
+int main(void) {
+    // func<> means automatic type evaluation
+    // {<list_expression>} would be an anonymous struct creation
+    printf<>("total: {} saying '{}'\n", {add::sum<>({21, 9.4, 2LL}), "hello"});
+    // struct of unknown int member count
+    int a[] = {1,3,5,3,3,8,7,4}; // yes this is initialized by anonymous struct
+    return EXIT_SUCCESS;
+}
